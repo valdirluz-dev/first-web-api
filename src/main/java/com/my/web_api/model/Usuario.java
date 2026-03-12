@@ -1,8 +1,16 @@
 package com.my.web_api.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 public class Usuario {
+
+    @Schema(description = "id do usuário", example = "1")
     private Integer id;
+
+    @Schema(description = "login do usuário", example = "nome@email.com")
     private String login;
+
+    @Schema(description = "senha do usuário", example = "admin123")
     private String senha;
 
     public Usuario(){}
