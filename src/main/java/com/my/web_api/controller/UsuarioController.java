@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users")
-@Tag(name = "users", description = "operações relacionadas a usuários" )
+@Tag(name = "users", description = "operações relacionadas a usuários")
 public class UsuarioController {
 
     @Autowired
@@ -24,25 +24,24 @@ public class UsuarioController {
         return repository.findAll();
     }
 
-    @PostMapping ()
+    @PostMapping
     @Operation(summary = "Salvar usuários", description = "Salva usuarios no BD")
     @PreAuthorize("hasRole('ADMIN')")
-    public void saveUser (@RequestBody Usuario user){
-        repository.save(user);
+    public Usuario saveUser(@RequestBody Usuario user){
+        return repository.save(user);
     }
 
-    @GetMapping (value = "/{nome}", produces = "application/json")
-    @Operation (summary = "buscar usuário por nome")
+    @GetMapping("/{login}")
+    @Operation(summary = "buscar usuário por login")
     @PreAuthorize("hasRole('ADMIN')")
-    public Usuario findByUsername(@PathVariable String nome) {
-        return repository.findByUserName(nome);
+    public Usuario findByLogin(@PathVariable String login) {
+        return repository.findByLogin(login);
     }
 
     @DeleteMapping("/{id}")
-    @Operation(summary = "Buscar usuário por id")
+    @Operation(summary = "Deletar usuário por id")
     @PreAuthorize("hasRole('ADMIN')")
-    public void delete (@PathVariable Integer id){
+    public void delete(@PathVariable Integer id){
         repository.deleteById(id);
     }
 }
-
