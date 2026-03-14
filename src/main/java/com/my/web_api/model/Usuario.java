@@ -1,5 +1,6 @@
 package com.my.web_api.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 
@@ -10,9 +11,10 @@ import java.util.List;
 @Table(name = "tab_user")
 public class Usuario {
 
+    @Schema(description = "id do usuário", example = "1")
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_user")
-    @Schema(description = "id do usuário", example = "1")
     private Integer id;
 
     @Schema(description = "nome do usuário", example = "joao")
@@ -25,6 +27,7 @@ public class Usuario {
 
     @Schema(description = "senha do usuário", example = "admin123")
     @Column(length = 100, nullable = false) //por causa do encoder
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String senha;
 
     @ElementCollection(fetch=FetchType.EAGER)

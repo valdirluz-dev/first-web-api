@@ -5,6 +5,7 @@ import com.my.web_api.repository.UserRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +28,7 @@ public class UsuarioController {
     @PostMapping
     @Operation(summary = "Salvar usuários", description = "Salva usuarios no BD")
     @PreAuthorize("hasRole('ADMIN')")
+    @ResponseStatus(HttpStatus.CREATED)
     public Usuario saveUser(@RequestBody Usuario user){
         return repository.save(user);
     }
@@ -41,6 +43,7 @@ public class UsuarioController {
     @DeleteMapping("/{id}")
     @Operation(summary = "Deletar usuário por id")
     @PreAuthorize("hasRole('ADMIN')")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Integer id){
         repository.deleteById(id);
     }
