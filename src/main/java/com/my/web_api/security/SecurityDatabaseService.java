@@ -21,7 +21,7 @@ public class SecurityDatabaseService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Usuario userEntity = userRepository.findByUsername(username);
+        Usuario userEntity = userRepository.findByLogin(username);
         if (userEntity == null) {
             throw new UsernameNotFoundException(username);
         }
