@@ -37,7 +37,8 @@ public class UsuarioController {
     @Operation(summary = "buscar usuário por login")
     @PreAuthorize("hasRole('ADMIN')")
     public Usuario findByLogin(@PathVariable String login) {
-        return repository.findByLogin(login);
+        return repository.findByLogin(login)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
     }
 
     @DeleteMapping("/{id}")
