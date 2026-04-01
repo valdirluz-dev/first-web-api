@@ -5,23 +5,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.security.access.AccessDeniedException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-
-    @ExceptionHandler(AccessDeniedException.class) public ResponseEntity<ResponseError> handleAccessDenied(
-            AccessDeniedException ex,
-            HttpServletRequest request) {
-        ResponseError error = new ResponseError(
-                HttpStatus.FORBIDDEN.value(),
-                "forbidden",
-                "Você não tem permissão para acessar este recurso",
-                request.getRequestURI()
-        );
-
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
-    }
 
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ResponseError> handleNotFound(
@@ -55,14 +41,16 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ResponseError> handle(
             Exception ex,
             HttpServletRequest request) {
-        ResponseError error = new ResponseError(
-                HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                "internal server error",
-                "Unexpected error occurred",
-                request.getRequestURI()
-        );
 
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
+        ex.printStackTrace(); // essencial pra debug
+
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new ResponseError(
+                        500,
+                        "internal server error",
+                        ex.getMessage(),
+                        request.getRequestURI()
+                ));
     }
 
 

@@ -27,14 +27,7 @@ public class SwaggerConfig {
                         .license(new License()
                                 .name("Apache 2.0")
                                 .url("http://springdoc.org")))
-                .addSecurityItem(
-                        new SecurityRequirement().addList("basicAuth"))
                 .components(new io.swagger.v3.oas.models.Components()
-                        .addSecuritySchemes("basicAuth",
-                                new SecurityScheme()
-                                        .type(SecurityScheme.Type.HTTP)
-                                        .scheme("basic")
-                        )
                 );
     }
 }

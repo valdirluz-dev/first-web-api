@@ -4,9 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
 @Table(name = "tab_user")
 public class Usuario {
@@ -30,11 +27,6 @@ public class Usuario {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String senha;
 
-    @ElementCollection(fetch=FetchType.EAGER)
-    @CollectionTable(name = "tab_user_roles", joinColumns = @JoinColumn(name="user_id"))
-    @Column(name="role_id")
-    private List<String> roles = new ArrayList<>();
-
     public Usuario(){}
 
     public Usuario(String login, String senha) {
@@ -46,8 +38,8 @@ public class Usuario {
     public String toString() {
         return "Usuario{" +
                 "id=" + id +
+                ", nome='" + nome + '\'' +
                 ", login='" + login + '\'' +
-                ", senha='" + senha + '\'' +
                 '}';
     }
 
@@ -81,13 +73,5 @@ public class Usuario {
 
     public void setSenha(String senha) {
         this.senha = senha;
-    }
-
-    public List<String> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<String> roles) {
-        this.roles = roles;
     }
 }
